@@ -74,20 +74,29 @@ public class TarefaController {
 	public ModelAndView concluirTarefa(@PathVariable("idTarefa") Long idTarefa, RedirectAttributes attr) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
 		
-		tarefaDao.alteraStatus(idTarefa, Status.CONCLUIDO);
-		
-		attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Concluída conforme solicitado.");
-		
-		return modelAndView;
+		try {
+			
+			tarefaDao.alteraStatus(idTarefa, Status.CONCLUIDO);
+			
+			attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Concluída conforme solicitado.");
+			
+		}catch (RuntimeException ex) {
+			attr.addFlashAttribute("erro", ex.getMessage());
+		}
+			return modelAndView;
 	}
 	
 	@GetMapping("encerrar/{idTarefa}")
 	public ModelAndView encerrarTarefa(@PathVariable("idTarefa") Long idTarefa, RedirectAttributes attr) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
 		
-		tarefaDao.alteraStatus(idTarefa, Status.ENCERRADO);
-		
-		attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Encerrada conforme solicitado.");
+		try {
+			tarefaDao.alteraStatus(idTarefa, Status.ENCERRADO);
+			
+			attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Encerrada conforme solicitado.");
+		}catch (RuntimeException ex) {
+			attr.addFlashAttribute("erro", ex.getMessage());
+		}
 		
 		return modelAndView;
 	}

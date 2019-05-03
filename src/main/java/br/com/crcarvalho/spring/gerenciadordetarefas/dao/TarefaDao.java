@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.crcarvalho.spring.gerenciadordetarefas.config.TarefaFinalizadaException;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
 
@@ -34,12 +35,20 @@ public class TarefaDao {
 	
 	@Transactional
 	public Tarefa alteraStatus(Long idTarefa, Status status) {
-		Tarefa tarefa = manager.find(Tarefa.class, idTarefa);
-		
-		tarefa.setStatus(status);
-		tarefa.setDataEncerramento(LocalDate.now());
-		
-		return tarefa;
+		try {
+			Tarefa tarefa = manager.find(Tarefa.class, idTarefa);
+			
+			if(tarefa.getStatus() != Status.ABERTO) {
+				throw new TarefaFinalizadaException("Tarefa já foi Encerrada/Concluída anteriormente.");
+			}
+			
+			tarefa.setStatus(status);
+			tarefa.setDataEncerramento(LocalDate.now());
+			
+			return tarefa;
+		}catch (NullPointerException ex) {
+			throw new RuntimeException("Tarefa não localizada para o id " + idTarefa);
+		}
 	}
 	
 }

@@ -25,6 +25,12 @@
 				${message }
 			</div>
 		</c:if>
+		<c:if test="${ not empty erro }">
+			<div class="alert alert-danger" role="alert">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+				${erro }
+			</div>
+		</c:if>
 	
 		<table class="table">
 			<tr>
@@ -56,13 +62,17 @@
 					<td>${tarefa.status }</td>
 					
 					<td>
-						<a href='<c:url value="/tarefa/encerrar/${tarefa.id }" />' class="btn btn-danger btn-sm">
-							<i class="fa fa-trash-o"></i>
-						</a>
+						<c:if test="${ tarefa.status == 'ABERTO' }">
 						
-						<a href='<c:url value="/tarefa/concluir/${tarefa.id }" />' class="btn btn-success btn-sm">
-							<i class="fa fa-check"></i>
-						</a>
+							<a href='<c:url value="/tarefa/encerrar/${tarefa.id }" />' class="btn btn-danger btn-sm">
+								<i class="fa fa-trash-o"></i>
+							</a>
+							
+							<a href='<c:url value="/tarefa/concluir/${tarefa.id }" />' class="btn btn-success btn-sm">
+								<i class="fa fa-check"></i>
+							</a>
+						
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>
