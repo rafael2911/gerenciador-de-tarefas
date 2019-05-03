@@ -32,4 +32,14 @@ public class TarefaDao {
 		return tarefa;
 	}
 	
+	@Transactional
+	public Tarefa alteraStatus(Long idTarefa, Status status) {
+		Tarefa tarefa = manager.find(Tarefa.class, idTarefa);
+		
+		tarefa.setStatus(status);
+		tarefa.setDataEncerramento(LocalDate.now());
+		
+		return tarefa;
+	}
+	
 }

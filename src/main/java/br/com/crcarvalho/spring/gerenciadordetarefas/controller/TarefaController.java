@@ -10,12 +10,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.crcarvalho.spring.gerenciadordetarefas.dao.TarefaDao;
+import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
 import br.com.crcarvalho.spring.gerenciadordetarefas.validator.TarefaValidador;
 
@@ -64,6 +66,28 @@ public class TarefaController {
 		tarefaDao.save(tarefa);
 		
 		attr.addFlashAttribute("message", "Tarefa cadastrada com sucesso!");
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("concluir/{idTarefa}")
+	public ModelAndView concluirTarefa(@PathVariable("idTarefa") Long idTarefa, RedirectAttributes attr) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
+		
+		tarefaDao.alteraStatus(idTarefa, Status.CONCLUIDO);
+		
+		attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Concluída conforme solicitado.");
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("encerrar/{idTarefa}")
+	public ModelAndView encerrarTarefa(@PathVariable("idTarefa") Long idTarefa, RedirectAttributes attr) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
+		
+		tarefaDao.alteraStatus(idTarefa, Status.ENCERRADO);
+		
+		attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Encerrada conforme solicitado.");
 		
 		return modelAndView;
 	}

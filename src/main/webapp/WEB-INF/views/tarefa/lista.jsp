@@ -18,7 +18,13 @@
 	<div class="container">
 	
 		<h1>Lista de Tarefas</h1>
-		<h4>${message }</h4>
+		
+		<c:if test="${ not empty message }">
+			<div class="alert alert-success" role="alert">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+				${message }
+			</div>
+		</c:if>
 	
 		<table class="table">
 			<tr>
@@ -50,19 +56,22 @@
 					<td>${tarefa.status }</td>
 					
 					<td>
-						<button type="button" class="btn btn-danger btn-sm">
+						<a href='<c:url value="/tarefa/encerrar/${tarefa.id }" />' class="btn btn-danger btn-sm">
 							<i class="fa fa-trash-o"></i>
-						</button>
+						</a>
 						
-						<button type="button" class="btn btn-success btn-sm">
+						<a href='<c:url value="/tarefa/concluir/${tarefa.id }" />' class="btn btn-success btn-sm">
 							<i class="fa fa-check"></i>
-						</button>
+						</a>
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
 	
 	</div>
+	
+	<script src="${cssPath }bootstrap/js/jquery-3.2.1.min.js"></script>
+	<script src="${cssPath }bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>
