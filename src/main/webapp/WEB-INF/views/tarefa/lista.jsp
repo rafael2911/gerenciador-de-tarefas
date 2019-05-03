@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,42 @@
 	<div class="container">
 	
 		<h1>Lista de Tarefas</h1>
+		
+		<c:url value="/tarefa/busca" var="tarefaUrl" />
+		<form action="${tarefaUrl }" method="get">
+			<div class="row">
+				<div class="col-sm-3 form-group">
+					<label>Status</label>
+					<select name="status" class="form-control form-control-sm">
+						<option value=""></option>
+						<c:forEach items="${status }" var="s">
+							<option value="${s }">${s }</option>
+						</c:forEach>
+					</select>
+				</div>
+				
+				<div class="col-sm-3 form-group">
+					<label>Tipo Data</label>
+					<select name="tipoData" class="form-control form-control-sm">
+					<option value=""></option>
+						<option value="dataAbertura">Abertura</option>
+						<option value="dataEncerramento">Encerramento</option>
+					</select>
+				</div>
+				<div class="col-sm-3 form-group">
+					<label>Inicial</label>
+					<input type="date" name="dtInicial" class="form-control form-control-sm">
+				</div>
+				<div class="col-sm-3 form-group">
+					<label>Final</label>
+					<input type="date" name="dtFinal" class="form-control form-control-sm">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12"><button type="submit" class="btn btn-primary btn-sm">Search</button></div>
+			</div>
+		</form>
+		<br>
 		
 		<c:if test="${ not empty message }">
 			<div class="alert alert-success" role="alert">

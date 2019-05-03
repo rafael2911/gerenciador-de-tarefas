@@ -23,6 +23,12 @@ public class TarefaDao {
 		return manager.createQuery("from Tarefa t", Tarefa.class).getResultList();
 	}
 	
+	public List<Tarefa> findByStatusOrAberturaOrEncerramento(){
+		String sql = "from Tarefa t where t.status = :status and t.dataAbertura = :dataAbertura and ";
+		
+		return null;
+	}
+	
 	@Transactional
 	public Tarefa save(Tarefa tarefa) {
 		tarefa.setDataAbertura(LocalDate.now());
