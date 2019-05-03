@@ -11,10 +11,11 @@
 <body>
 	<h1>Cadastro de Tarefas</h1>
 	
-	<form:form servletRelativeAction='<s:url value="/tarefa" />' commandName="tarefa">
+	<s:url value="/tarefa/cadastrar" var="urlSalvar" />
+	<form:form servletRelativeAction="${urlSalvar }" commandName="tarefa">
 		<div>
 			<label>Descrição:</label>
-			<form:textarea path="descricao"/>
+			<form:textarea path="descricao" rows="5" cols="20"/>
 		</div>	
 		
 		<button type="submit">Salvar</button>
