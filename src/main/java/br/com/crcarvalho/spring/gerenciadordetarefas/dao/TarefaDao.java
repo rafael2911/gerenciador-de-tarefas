@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.crcarvalho.spring.gerenciadordetarefas.config.TarefaFinalizadaException;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
+import br.com.crcarvalho.spring.gerenciadordetarefas.model.TarefaBeanParam;
 
 @Repository
 public class TarefaDao {
@@ -23,10 +24,13 @@ public class TarefaDao {
 		return manager.createQuery("from Tarefa t", Tarefa.class).getResultList();
 	}
 	
-	public List<Tarefa> findByStatusOrAberturaOrEncerramento(){
-		String sql = "from Tarefa t where t.status = :status and t.dataAbertura = :dataAbertura and ";
+	public List<Tarefa> findByStatusOrAberturaOrEncerramento(TarefaBeanParam beanParam){
+		String sql = "from Tarefa t where t.status = :status";
 		
-		return null;
+		return manager.createQuery(sql, Tarefa.class)
+				.setParameter("status", beanParam.getStatus())
+				.getResultList();
+		
 	}
 	
 	@Transactional

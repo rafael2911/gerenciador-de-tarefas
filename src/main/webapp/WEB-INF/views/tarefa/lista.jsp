@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <!DOCTYPE html>
 <html>
@@ -20,17 +21,16 @@
 	
 		<h1>Lista de Tarefas</h1>
 		
-		<c:url value="/tarefa/busca" var="tarefaUrl" />
-		<form action="${tarefaUrl }" method="get">
+		<form:form commandName="tarefaBeanParam" servletRelativeAction="/tarefa/busca"  method="get">
 			<div class="row">
 				<div class="col-sm-3 form-group">
 					<label>Status</label>
-					<select name="status" class="form-control form-control-sm">
+					<form:select path="status" cssClass="form-control form-control-sm">
 						<option value=""></option>
 						<c:forEach items="${status }" var="s">
-							<option value="${s }">${s }</option>
+							<form:option value="${s }">${s }</form:option>
 						</c:forEach>
-					</select>
+					</form:select>
 				</div>
 				
 				<div class="col-sm-3 form-group">
@@ -53,7 +53,7 @@
 			<div class="row">
 				<div class="col-sm-12"><button type="submit" class="btn btn-primary btn-sm">Search</button></div>
 			</div>
-		</form>
+		</form:form>
 		<br>
 		
 		<c:if test="${ not empty message }">

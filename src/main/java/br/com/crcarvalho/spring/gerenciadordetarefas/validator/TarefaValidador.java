@@ -5,6 +5,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
+import br.com.crcarvalho.spring.gerenciadordetarefas.model.TarefaBeanParam;
 
 public class TarefaValidador implements Validator {
 	
@@ -12,7 +13,7 @@ public class TarefaValidador implements Validator {
 	@Override
 	public boolean supports(Class<?> clazz) {
 		
-		return Tarefa.class.isAssignableFrom(clazz);
+		return Tarefa.class.isAssignableFrom(clazz) || TarefaBeanParam.class.isAssignableFrom(clazz);
 	}
 	
 	/* informa quais campos e como deverá realizar a validacao */

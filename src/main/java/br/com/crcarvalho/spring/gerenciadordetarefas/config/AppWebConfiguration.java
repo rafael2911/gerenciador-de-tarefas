@@ -11,9 +11,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.crcarvalho.spring.gerenciadordetarefas.controller.HomeController;
 import br.com.crcarvalho.spring.gerenciadordetarefas.dao.TarefaDao;
+import br.com.crcarvalho.spring.gerenciadordetarefas.validator.TarefaValidador;
 
 @EnableWebMvc
-@ComponentScan(basePackageClasses={HomeController.class, TarefaDao.class})
+@ComponentScan(basePackageClasses={HomeController.class, TarefaDao.class, TarefaValidador.class})
 public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Bean

@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.crcarvalho.spring.gerenciadordetarefas.dao.TarefaDao;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
+import br.com.crcarvalho.spring.gerenciadordetarefas.model.TarefaBeanParam;
 import br.com.crcarvalho.spring.gerenciadordetarefas.validator.TarefaValidador;
 
 @Controller
@@ -36,7 +36,7 @@ public class TarefaController {
 	}
 	
 	@GetMapping
-	public ModelAndView listarTodas() {
+	public ModelAndView listarTodas(TarefaBeanParam tarefaBeanParam) {
 		
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
@@ -49,12 +49,12 @@ public class TarefaController {
 	}
 	
 	@GetMapping("busca")
-	public ModelAndView buscaTarefas(@RequestParam Status status) {
+	public ModelAndView buscaTarefas(TarefaBeanParam tarefaBeanParam) {
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
-		System.out.println(status);
+		System.out.println(tarefaBeanParam.getStatus());
 		
-		List<Tarefa> tarefas = tarefaDao.findAll();
+		List<Tarefa> tarefas = tarefaDao.findByStatusOrAberturaOrEncerramento(tarefaBeanParam);
 		
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());
