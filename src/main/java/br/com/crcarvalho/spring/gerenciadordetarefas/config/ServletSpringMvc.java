@@ -2,7 +2,6 @@ package br.com.crcarvalho.spring.gerenciadordetarefas.config;
 
 import javax.servlet.Filter;
 
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

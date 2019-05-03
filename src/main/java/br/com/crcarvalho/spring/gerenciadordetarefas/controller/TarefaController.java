@@ -2,9 +2,14 @@ package br.com.crcarvalho.spring.gerenciadordetarefas.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.crcarvalho.spring.gerenciadordetarefas.dao.TarefaDao;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
+import br.com.crcarvalho.spring.gerenciadordetarefas.validator.TarefaValidador;
 
 @Controller
 @RequestMapping("/tarefa")
@@ -19,6 +25,12 @@ public class TarefaController {
 	
 	@Autowired
 	private TarefaDao tarefaDao;
+	
+	/* Registra o validador criado para a classe tarefa */
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.addValidators(new TarefaValidador());
+	}
 	
 	@GetMapping
 	public ModelAndView listarTodas() {
@@ -39,7 +51,14 @@ public class TarefaController {
 	}
 	
 	@PostMapping("cadastrar")
-	public ModelAndView cadastrar(Tarefa tarefa, RedirectAttributes attr) {
+	public ModelAndView cadastrar(@Valid Tarefa tarefa, BindingResult result, RedirectAttributes attr) {
+		
+		/* verifica se validacao retorna erros */
+		if(result.hasErrors()) {
+			return formCadastro(tarefa);
+		}
+		
+		
 		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
 		
 		tarefaDao.save(tarefa);
