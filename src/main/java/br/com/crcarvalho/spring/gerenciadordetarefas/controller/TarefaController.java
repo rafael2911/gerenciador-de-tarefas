@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.crcarvalho.spring.gerenciadordetarefas.dao.TarefaDao;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.TarefaBeanParam;
+import br.com.crcarvalho.spring.gerenciadordetarefas.service.TarefaService;
 import br.com.crcarvalho.spring.gerenciadordetarefas.validator.TarefaValidador;
 
 @Controller
@@ -27,7 +27,7 @@ import br.com.crcarvalho.spring.gerenciadordetarefas.validator.TarefaValidador;
 public class TarefaController {
 	
 	@Autowired
-	private TarefaDao tarefaDao;
+	private TarefaService tarefaService;
 	
 	/* Registra o validador criado para a classe tarefa */
 	@InitBinder
@@ -40,7 +40,7 @@ public class TarefaController {
 		
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
-		List<Tarefa> tarefas = tarefaDao.findAll();
+		List<Tarefa> tarefas = tarefaService.findAll();
 		
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());
@@ -54,8 +54,7 @@ public class TarefaController {
 		
 		System.out.println(tarefaBeanParam.getStatus());
 		
-		List<Tarefa> tarefas = tarefaDao.findByStatusOrAberturaOrEncerramento(tarefaBeanParam);
-		
+		List<Tarefa> tarefas = tarefaService.findByStatusOrDataAberturaOrDataEncerramento(tarefaBeanParam);
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());
 		
@@ -80,7 +79,7 @@ public class TarefaController {
 		
 		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
 		
-		tarefaDao.save(tarefa);
+		tarefaService.save(tarefa);
 		
 		attr.addFlashAttribute("message", "Tarefa cadastrada com sucesso!");
 		
@@ -93,7 +92,7 @@ public class TarefaController {
 		
 		try {
 			
-			tarefaDao.alteraStatus(idTarefa, Status.CONCLUIDO);
+			tarefaService.alteraStatus(idTarefa, Status.CONCLUIDO);
 			
 			attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Concluída conforme solicitado.");
 			
@@ -108,7 +107,7 @@ public class TarefaController {
 		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
 		
 		try {
-			tarefaDao.alteraStatus(idTarefa, Status.ENCERRADO);
+			tarefaService.alteraStatus(idTarefa, Status.ENCERRADO);
 			
 			attr.addFlashAttribute("message", "Tarefa " + idTarefa + " Encerrada conforme solicitado.");
 		}catch (RuntimeException ex) {

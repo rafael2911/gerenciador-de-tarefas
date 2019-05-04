@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.crcarvalho.spring.gerenciadordetarefas.config.TarefaFinalizadaException;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
-import br.com.crcarvalho.spring.gerenciadordetarefas.model.TarefaBeanParam;
 
 @Repository
 public class TarefaDao {
@@ -24,13 +23,40 @@ public class TarefaDao {
 		return manager.createQuery("from Tarefa t", Tarefa.class).getResultList();
 	}
 	
-	public List<Tarefa> findByStatusOrAberturaOrEncerramento(TarefaBeanParam beanParam){
-		String sql = "from Tarefa t where t.status = :status";
-		
-		return manager.createQuery(sql, Tarefa.class)
-				.setParameter("status", beanParam.getStatus())
-				.getResultList();
-		
+	public List<Tarefa> findByStatus(Status status){
+		return manager.createQuery("from Tarefa t where t.status = :status", Tarefa.class)
+					.setParameter("status", status)
+					.getResultList();
+	}
+	
+	public List<Tarefa> findByDataAbertura(LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("from Tarefa t where t.dataAbertura between :dataInicial and :dataFinal", Tarefa.class)
+					.setParameter("dataInicial", dataInicial)
+					.setParameter("dataFinal", dataFinal)
+					.getResultList();
+	}
+	
+	public List<Tarefa> findByDataEncerramento(LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("from Tarefa t where t.dataEncerramento between :dataInicial and :dataFinal", Tarefa.class)
+					.setParameter("dataInicial", dataInicial)
+					.setParameter("dataFinal", dataFinal)
+					.getResultList();
+	}
+	
+	public List<Tarefa> findByStatusAndDataAbertura(Status status, LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("from Tarefa t where t.status = :status and (t.dataAbertura between :dataInicial and :dataFinal)", Tarefa.class)
+					.setParameter("status", status)
+					.setParameter("dataInicial", dataInicial)
+					.setParameter("dataFinal", dataFinal)
+					.getResultList();
+	}
+	
+	public List<Tarefa> findByStatusAndDataEncerramento(Status status, LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("from Tarefa t where t.status = :status and (t.dataEncerramento between :dataInicial and :dataFinal)", Tarefa.class)
+					.setParameter("status", status)
+					.setParameter("dataInicial", dataInicial)
+					.setParameter("dataFinal", dataFinal)
+					.getResultList();
 	}
 	
 	@Transactional
