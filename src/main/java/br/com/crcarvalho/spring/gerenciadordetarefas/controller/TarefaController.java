@@ -1,5 +1,6 @@
 package br.com.crcarvalho.spring.gerenciadordetarefas.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -36,11 +37,11 @@ public class TarefaController {
 	}
 	
 	@GetMapping
-	public ModelAndView listarTodas(TarefaBeanParam tarefaBeanParam) {
+	public ModelAndView homeTarefas(TarefaBeanParam tarefaBeanParam) {
 		
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
-		List<Tarefa> tarefas = tarefaService.findAll();
+		List<Tarefa> tarefas = tarefaService.findByDataAbertura(LocalDate.now(), LocalDate.now());
 		
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());

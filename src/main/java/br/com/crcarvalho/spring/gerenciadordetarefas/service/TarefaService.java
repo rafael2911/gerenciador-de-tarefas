@@ -1,5 +1,6 @@
 package br.com.crcarvalho.spring.gerenciadordetarefas.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class TarefaService {
 		}
 		
 		if(!beanParam.getTipoData().isEmpty() && beanParam.getTipoData().equals("dataAbertura")) {
-			return tarefaDao.findByDataAbertura(beanParam.getDtInicial(), beanParam.getDtFinal());
+			return findByDataAbertura(beanParam.getDtInicial(), beanParam.getDtFinal());
 		}
 		
 		if(!beanParam.getTipoData().isEmpty() && beanParam.getTipoData().equals("dataEncerramento")) {
@@ -34,6 +35,14 @@ public class TarefaService {
 		}
 		
 		return tarefaDao.findAll();
+	}
+	
+	public List<Tarefa> findByDataAbertura(LocalDate dataInicial, LocalDate dataFinal){
+		if(dataFinal == null) {
+			dataFinal = dataInicial;
+		}
+		
+		return tarefaDao.findByDataAbertura(dataInicial, dataFinal);
 	}
 
 	public Tarefa save(Tarefa tarefa) {
