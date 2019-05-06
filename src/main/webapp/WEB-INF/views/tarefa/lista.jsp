@@ -26,7 +26,7 @@
 				<div class="col-sm-3 form-group">
 					<label>Status</label>
 					<form:select path="status" cssClass="form-control form-control-sm">
-						<option value=""></option>
+						<form:option value=""></form:option>
 						<c:forEach items="${status }" var="s">
 							<form:option value="${s }">${s }</form:option>
 						</c:forEach>
@@ -35,19 +35,19 @@
 				
 				<div class="col-sm-3 form-group">
 					<label>Tipo Data</label>
-					<select name="tipoData" class="form-control form-control-sm">
+					<form:select path="tipoData" cssClass="form-control form-control-sm">
 					<option value=""></option>
-						<option value="dataAbertura">Abertura</option>
-						<option value="dataEncerramento">Encerramento</option>
-					</select>
+						<form:option value="dataAbertura">Abertura</form:option>
+						<form:option value="dataEncerramento">Encerramento</form:option>
+					</form:select>
 				</div>
 				<div class="col-sm-3 form-group">
 					<label>Inicial</label>
-					<input type="date" name="dtInicial" class="form-control form-control-sm">
+					<form:input type="date" path="dtInicial" cssClass="form-control form-control-sm" />
 				</div>
 				<div class="col-sm-3 form-group">
 					<label>Final</label>
-					<input type="date" name="dtFinal" class="form-control form-control-sm">
+					<form:input type="date" path="dtFinal" cssClass="form-control form-control-sm" />
 				</div>
 			</div>
 			<div class="row">
