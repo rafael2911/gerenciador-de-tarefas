@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,9 +79,13 @@ public class TarefaDao {
 	}
 	
 	@Transactional
-	public Tarefa alteraStatus(Long idTarefa, Status status) {
+	public Tarefa alteraStatus(Usuario usuario, Long idTarefa, Status status) {
 		try {
-			Tarefa tarefa = manager.find(Tarefa.class, idTarefa);
+			Tarefa tarefa = findById(idTarefa);
+			
+			if(!tarefa.getUsuario().getEmail().equals(usuario.getEmail())) {
+				throw new AccessDeniedException("O usuario não tem permissão para encerrar/concluir essa tarefa.");
+			}
 			
 			if(tarefa.getStatus() != Status.ABERTO) {
 				throw new TarefaFinalizadaException("Tarefa já foi Encerrada/Concluída anteriormente.");
@@ -93,6 +98,11 @@ public class TarefaDao {
 		}catch (NullPointerException ex) {
 			throw new RuntimeException("Tarefa não localizada para o id " + idTarefa);
 		}
+	}
+
+	public Tarefa findById(Long idTarefa) {
+		
+		return manager.find(Tarefa.class, idTarefa);
 	}
 	
 }

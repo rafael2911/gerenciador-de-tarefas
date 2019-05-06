@@ -58,8 +58,9 @@ public class TarefaService {
 		return tarefaDao.save(tarefa);
 	}
 
-	public Tarefa alteraStatus(Long idTarefa, Status status) {
-		return tarefaDao.alteraStatus(idTarefa, status);
+	public Tarefa alteraStatus(Usuario usuario, Long idTarefa, Status status) {
+		
+		return tarefaDao.alteraStatus(usuario, idTarefa, status);
 	}
 	
 }
