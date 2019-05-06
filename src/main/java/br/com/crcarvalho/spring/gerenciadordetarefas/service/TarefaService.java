@@ -31,7 +31,7 @@ public class TarefaService {
 		}
 		
 		if(!beanParam.getTipoData().isEmpty() && beanParam.getTipoData().equals("dataEncerramento")) {
-			return tarefaDao.findByDataEncerramento(beanParam.getDtInicial(), beanParam.getDtFinal());
+			return findByDataEncerramento(beanParam.getDtInicial(), beanParam.getDtFinal());
 		}
 		
 		return tarefaDao.findAll();
@@ -43,6 +43,14 @@ public class TarefaService {
 		}
 		
 		return tarefaDao.findByDataAbertura(dataInicial, dataFinal);
+	}
+	
+	public List<Tarefa> findByDataEncerramento(LocalDate dataInicial, LocalDate dataFinal){
+		if(dataFinal == null) {
+			dataFinal = dataInicial;
+		}
+		
+		return tarefaDao.findByDataEncerramento(dataInicial, dataFinal);
 	}
 
 	public Tarefa save(Tarefa tarefa) {

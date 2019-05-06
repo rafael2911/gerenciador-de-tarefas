@@ -53,8 +53,6 @@ public class TarefaController {
 	public ModelAndView buscaTarefas(TarefaBeanParam tarefaBeanParam) {
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
-		System.out.println(tarefaBeanParam.getStatus());
-		
 		List<Tarefa> tarefas = tarefaService.findByStatusOrDataAberturaOrDataEncerramento(tarefaBeanParam);
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());
