@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.crcarvalho.spring.gerenciadordetarefas.config.TarefaFinalizadaException;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
+import br.com.crcarvalho.spring.gerenciadordetarefas.model.Usuario;
 
 @Repository
 public class TarefaDao {
@@ -19,40 +20,47 @@ public class TarefaDao {
 	@PersistenceContext
 	private EntityManager manager;
 	
-	public List<Tarefa> findAll(){
-		return manager.createQuery("from Tarefa t", Tarefa.class).getResultList();
+	public List<Tarefa> findAll(Usuario usuario){
+		return manager.createQuery("from Tarefa t join fetch t.usuario u where u.email = :email", Tarefa.class)
+				.setParameter("email", usuario.getEmail())
+				.getResultList();
 	}
 	
-	public List<Tarefa> findByStatus(Status status){
-		return manager.createQuery("from Tarefa t where t.status = :status", Tarefa.class)
+	public List<Tarefa> findByStatus(Usuario usuario, Status status){
+		return manager.createQuery("from Tarefa t join fetch t.usuario u where u.email = :email and t.status = :status", Tarefa.class)
+					.setParameter("email", usuario.getEmail())
 					.setParameter("status", status)
 					.getResultList();
 	}
 	
-	public List<Tarefa> findByDataAbertura(LocalDate dataInicial, LocalDate dataFinal){
-		return manager.createQuery("from Tarefa t where t.dataAbertura between :dataInicial and :dataFinal", Tarefa.class)
+	public List<Tarefa> findByDataAbertura(Usuario usuario, LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("select t from Tarefa t join fetch t.usuario u where u.email = :email and t.dataAbertura between :dataInicial and :dataFinal", Tarefa.class)
+					.setParameter("email", usuario.getEmail())
 					.setParameter("dataInicial", dataInicial)
 					.setParameter("dataFinal", dataFinal)
 					.getResultList();
 	}
 	
-	public List<Tarefa> findByDataEncerramento(LocalDate dataInicial, LocalDate dataFinal){
-		return manager.createQuery("from Tarefa t where t.dataEncerramento between :dataInicial and :dataFinal", Tarefa.class)
+	public List<Tarefa> findByDataEncerramento(Usuario usuario, LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("from Tarefa t join fetch t.usuario u where u.email = :email and t.dataEncerramento between :dataInicial and :dataFinal", Tarefa.class)
+					.setParameter("email", usuario.getEmail())
 					.setParameter("dataInicial", dataInicial)
 					.setParameter("dataFinal", dataFinal)
 					.getResultList();
 	}
 	
-	public List<Tarefa> findByStatusAndDataAbertura(Status status, LocalDate dataInicial, LocalDate dataFinal){
-		return manager.createQuery("from Tarefa t where t.status = :status and (t.dataAbertura between :dataInicial and :dataFinal)", Tarefa.class)
+	public List<Tarefa> findByStatusAndDataAbertura(Usuario usuario, Status status, LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("from Tarefa t join fetch t.usuario u where u.email = :email and t.status = :status and (t.dataAbertura between :dataInicial and :dataFinal)", Tarefa.class)
+					.setParameter("email", usuario.getEmail())
 					.setParameter("status", status)
 					.setParameter("dataInicial", dataInicial)
 					.setParameter("dataFinal", dataFinal)
 					.getResultList();
 	}
 	
-	public List<Tarefa> findByStatusAndDataEncerramento(Status status, LocalDate dataInicial, LocalDate dataFinal){
-		return manager.createQuery("from Tarefa t where t.status = :status and (t.dataEncerramento between :dataInicial and :dataFinal)", Tarefa.class)
+	public List<Tarefa> findByStatusAndDataEncerramento(Usuario usuario, Status status, LocalDate dataInicial, LocalDate dataFinal){
+		return manager.createQuery("from Tarefa t join fetch t.usuario u where u.email = :email and t.status = :status and (t.dataEncerramento between :dataInicial and :dataFinal)", Tarefa.class)
+					.setParameter("email", usuario.getEmail())
 					.setParameter("status", status)
 					.setParameter("dataInicial", dataInicial)
 					.setParameter("dataFinal", dataFinal)

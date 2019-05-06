@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Status;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Tarefa;
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.TarefaBeanParam;
+import br.com.crcarvalho.spring.gerenciadordetarefas.model.Usuario;
 import br.com.crcarvalho.spring.gerenciadordetarefas.service.TarefaService;
 import br.com.crcarvalho.spring.gerenciadordetarefas.validator.TarefaValidador;
 
@@ -37,11 +39,11 @@ public class TarefaController {
 	}
 	
 	@GetMapping
-	public ModelAndView homeTarefas(TarefaBeanParam tarefaBeanParam) {
+	public ModelAndView homeTarefas(@AuthenticationPrincipal Usuario usuario, TarefaBeanParam tarefaBeanParam) {
 		
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
-		List<Tarefa> tarefas = tarefaService.findByDataAbertura(LocalDate.now(), LocalDate.now());
+		List<Tarefa> tarefas = tarefaService.findByDataAbertura(usuario, LocalDate.now(), LocalDate.now());
 		
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());
@@ -50,10 +52,10 @@ public class TarefaController {
 	}
 	
 	@GetMapping("busca")
-	public ModelAndView buscaTarefas(TarefaBeanParam tarefaBeanParam) {
+	public ModelAndView buscaTarefas(@AuthenticationPrincipal Usuario usuario, TarefaBeanParam tarefaBeanParam) {
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
-		List<Tarefa> tarefas = tarefaService.findByStatusOrDataAberturaOrDataEncerramento(tarefaBeanParam);
+		List<Tarefa> tarefas = tarefaService.findByStatusOrDataAberturaOrDataEncerramento(usuario, tarefaBeanParam);
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());
 		
@@ -68,7 +70,7 @@ public class TarefaController {
 	}
 	
 	@PostMapping("cadastrar")
-	public ModelAndView cadastrar(@Valid Tarefa tarefa, BindingResult result, RedirectAttributes attr) {
+	public ModelAndView cadastrar(@Valid Tarefa tarefa, @AuthenticationPrincipal Usuario usuario, BindingResult result, RedirectAttributes attr) {
 		
 		/* verifica se validacao retorna erros */
 		if(result.hasErrors()) {
@@ -77,7 +79,7 @@ public class TarefaController {
 		
 		
 		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
-		
+		tarefa.setUsuario(usuario);
 		tarefaService.save(tarefa);
 		
 		attr.addFlashAttribute("message", "Tarefa cadastrada com sucesso!");
