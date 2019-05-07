@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -47,13 +50,13 @@
 		
 		<c:if test="${ not empty message }">
 			<div class="alert alert-success" role="alert">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">Ã—</a>
 				${message }
 			</div>
 		</c:if>
 		<c:if test="${ not empty erro }">
 			<div class="alert alert-danger" role="alert">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">Ã—</a>
 				${erro }
 			</div>
 		</c:if>
@@ -61,27 +64,27 @@
 		<table class="table">
 			<tr>
 				<th>Id</th>
-				<th>Descrição</th>
+				<th>DescriÃ§Ã£o</th>
 				<th>Abertura</th>
 				<th>Encerramento</th>
 				<th>Status</th>
-				<th>Ações</th>
+				<th>AÃ§Ãµes</th>
 			</tr>
 			<c:forEach items="${tarefas }" var="tarefa">
 				<tr>
 					<td>${tarefa.id }</td>
 					<td>${tarefa.descricao }</td>
 					<td>
-						<!-- Converte a variável de LocalDate para Date (não seria necessário se o atributo dataPublicacao fosse Date ou Calendar) -->
+						<!-- Converte a variÃ¡vel de LocalDate para Date (nÃ£o seria necessÃ¡rio se o atributo dataPublicacao fosse Date ou Calendar) -->
 						<fmt:parseDate var="dataAbertura" value="${tarefa.dataAbertura }"
-							pattern="yyyy-MM-dd" type="date" /> <!-- Formata a exibição da data -->
+							pattern="yyyy-MM-dd" type="date" /> <!-- Formata a exibiÃ§Ã£o da data -->
 						<fmt:formatDate value="${dataAbertura }" pattern="dd/MM/yyyy"
 							type="date" />
 					</td>
 					<td>
-						<!-- Converte a variável de LocalDate para Date (não seria necessário se o atributo dataPublicacao fosse Date ou Calendar) -->
+						<!-- Converte a variÃ¡vel de LocalDate para Date (nÃ£o seria necessÃ¡rio se o atributo dataPublicacao fosse Date ou Calendar) -->
 						<fmt:parseDate var="dataEncerramento" value="${tarefa.dataEncerramento }"
-							pattern="yyyy-MM-dd" type="date" /> <!-- Formata a exibição da data -->
+							pattern="yyyy-MM-dd" type="date" /> <!-- Formata a exibiÃ§Ã£o da data -->
 						<fmt:formatDate value="${dataEncerramento }" pattern="dd/MM/yyyy"
 							type="date" />
 					</td>
@@ -105,8 +108,5 @@
 		</table>
 	
 	</div>
-	
-	<script src="${cssPath }bootstrap/js/jquery-3.2.1.min.js"></script>
-	<script src="${cssPath }bootstrap/js/bootstrap.min.js"></script>
 
 </tags:pageTemplate>

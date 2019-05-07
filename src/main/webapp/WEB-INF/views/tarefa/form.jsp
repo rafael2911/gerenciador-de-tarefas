@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
@@ -13,7 +16,7 @@
 		<s:url value="/tarefa/cadastrar" var="urlSalvar" />
 		<form:form servletRelativeAction="${urlSalvar }" commandName="tarefa">
 			<div class="form-group">
-				<label>Descrição:</label>
+				<label>DescriÃ§Ã£o:</label>
 				<form:textarea path="descricao" cssClass="form-control"/>
 				<form:errors path="descricao" cssClass="alert-danger" />
 			</div>	
