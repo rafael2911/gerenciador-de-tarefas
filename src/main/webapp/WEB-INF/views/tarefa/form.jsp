@@ -4,7 +4,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 	
-<tags:pageTemplate titulo="">
+<tags:pageTemplate titulo="Cadastro de Tarefas">
 
 	<div class="container">
 	

@@ -11,10 +11,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href='<c:url value="/produto" />'>Lista de Produtos</a>
+        <a class="nav-link" href='<c:url value="/tarefa" />'>Lista de Tarefas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href='<c:url value="/produto/form" />'>Cadastro de Produtos</a>
+        <a class="nav-link" href='<c:url value="/tarefa/form" />'>Cadastro de Tarefas</a>
       </li>
     </ul>
     <ul class="navbar-nav mr-rigth">
