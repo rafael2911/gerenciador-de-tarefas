@@ -1,5 +1,7 @@
 package br.com.crcarvalho.spring.gerenciadordetarefas.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -16,6 +18,11 @@ public class UsuarioDao implements UserDetailsService {
 	
 	@PersistenceContext
 	private EntityManager manager;
+	
+	public List<Object> findAll(){
+		return manager.createQuery("from Usuario u", Object.class)
+				.getResultList();
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
