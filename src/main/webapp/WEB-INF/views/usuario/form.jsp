@@ -32,17 +32,27 @@
 			</div>
 			<div class="form-group">
 				<label>Permissoes:</label>
-				<form:select path="roles" multiple="true" size="4" cssClass="form-control">
+				<form:select  path="roles" cssClass="form-control">
 					<c:forEach items="${roles }" var="role">
 						<form:option value="${role.nome }">${role.nome }</form:option>
 					</c:forEach>
 				</form:select>
-				<form:errors path="senha" cssClass="alert-danger" />
+				<form:errors path="roles" cssClass="alert-danger" />
 			</div>
 					
 			
 			<button type="submit" class="btn btn-primary">Salvar</button>
 		</form:form>
+			
+<%-- 			<form:form action="${urlSalvar }"> --%>
+<!-- 				<select name="roles" multiple="multiple"> -->
+<%-- 					<c:forEach items="${roles }" var="role"> --%>
+<%-- 						<option value="${role.nome }">${role.nome }</option> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</select> -->
+				
+<!-- 				<button type="submit">Enviar</button> -->
+<%-- 			</form:form> --%>
 		
 	</div>
 	
