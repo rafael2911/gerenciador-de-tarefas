@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -66,16 +67,13 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("cadastrar")
+	@Transactional
 	public ModelAndView cadastrar(Usuario usuario, RedirectAttributes attr) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/usuario/list");
 		
-		System.out.println(usuario.getEmail() + " - " + usuario.getNome() + " - " + usuario.getSenha() + " - " + usuario.getRoles());
+		usuarioDao.save(usuario);
 		
-		
-		
-//		usuarioDao.save(usuario);
-//		
-//		attr.addFlashAttribute("message", "Usuário " + usuario.getEmail() + " cadastrado com sucesso.");
+		attr.addFlashAttribute("message", "Usuário " + usuario.getEmail() + " cadastrado com sucesso.");
 		
 		return modelAndView;
 	}

@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.com.crcarvalho.spring.gerenciadordetarefas.model.Usuario;
 
@@ -40,13 +39,12 @@ public class UsuarioDao implements UserDetailsService {
 		return usuario;
 	}
 	
-//	@Transactional
-//	public Usuario save(Usuario usuario) {
-//		
-//		manager.persist(usuario);
-//		
-//		return usuario;
-//		
-//	}
+	public Usuario save(Usuario usuario) {
+		
+		manager.persist(usuario);
+		
+		return usuario;
+		
+	}
 
 }
