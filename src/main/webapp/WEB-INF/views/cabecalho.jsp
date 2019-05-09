@@ -35,7 +35,7 @@
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="dropdown-item" href='<c:url value="/logout" />'>Sair</a>
-	          <a class="dropdown-item" href="#">Alterar Senha</a>
+	          <a class="dropdown-item" href='<c:url value="/usuario/alteraSenha" />'>Alterar Senha</a>
 	        </div>
 	      </li>
 	</ul>

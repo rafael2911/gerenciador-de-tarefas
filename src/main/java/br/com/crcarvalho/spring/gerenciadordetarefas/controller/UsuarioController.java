@@ -1,10 +1,10 @@
 package br.com.crcarvalho.spring.gerenciadordetarefas.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -80,23 +79,49 @@ public class UsuarioController {
 		return modelAndView;
 	}
 	
-	@GetMapping("logicamalucacadastrausuariopadrao")
-	@ResponseBody
-	@Transactional
-	public String cadastrarUsuarioPadrao() {
-		Role role = new Role("ROLE_ADMIN");
+	@GetMapping("alteraSenha")
+	public ModelAndView formAlteraSenha(@AuthenticationPrincipal Usuario usuario) {
+		ModelAndView modelAndView = new ModelAndView("usuario/formAlteraSenha");
 		
-		roleDao.save(role);
+		modelAndView.addObject("id", usuario.getEmail());
 		
-		Usuario usuario = new Usuario(); 
-	    usuario.setNome("Rafael");
-	    usuario.setEmail("rafael@admin.com.br");
-	    usuario.setSenha("suporte123");
-	    usuario.setRoles(Arrays.asList(role));
-	    
-	    usuarioDao.save(usuario);
-
-	    return "Url Mágica executada";
+		return modelAndView;
 	}
+	
+	@PostMapping("alteraSenha")
+	@Transactional
+	public ModelAndView alteraSenha(@AuthenticationPrincipal Usuario usuario, String senha, String email, RedirectAttributes attr) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/tarefa/");
+		
+		if(!email.equals(usuario.getEmail())) {
+			attr.addFlashAttribute("erro", "Erro ao alterar senha do usuário!");
+			return modelAndView;
+		}
+		
+		usuarioDao.altera(usuario, senha);
+		
+		attr.addFlashAttribute("message", "Senha atualizada com sucesso!");
+		
+		return modelAndView;
+	}
+	
+//	@GetMapping("logicamalucacadastrausuariopadrao")
+//	@ResponseBody
+//	@Transactional
+//	public String cadastrarUsuarioPadrao() {
+//		Role role = new Role("ROLE_ADMIN");
+//		
+//		roleDao.save(role);
+//		
+//		Usuario usuario = new Usuario(); 
+//	    usuario.setNome("Rafael");
+//	    usuario.setEmail("rafael@admin.com.br");
+//	    usuario.setSenha("suporte123");
+//	    usuario.setRoles(Arrays.asList(role));
+//	    
+//	    usuarioDao.save(usuario);
+//
+//	    return "Url Mágica executada";
+//	}
 	
 }

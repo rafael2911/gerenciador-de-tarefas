@@ -46,5 +46,14 @@ public class UsuarioDao implements UserDetailsService {
 		return usuario;
 		
 	}
+	
+	public Usuario altera(Usuario usuario, String senha) {
+		Usuario usuarioManaged = manager.find(Usuario.class, usuario.getEmail());
+		
+		usuarioManaged.setSenha(senha);
+		
+		return usuario;
+		
+	}
 
 }
