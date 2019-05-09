@@ -15,15 +15,29 @@
       <li class="nav-item">
         <a class="nav-link" href='<c:url value="/tarefa/form" />'>Cadastro de Tarefas</a>
       </li>
+      <security:authorize access="hasRole('ROLE_ADMIN')">
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Usuario
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href='<c:url value="/usuario/list" />'>Listagem</a>
+	          <a class="dropdown-item" href='<c:url value="/usuario/form" />'>Cadastro</a>
+	        </div>
+	      </li>
+	  </security:authorize>
     </ul>
     <ul class="navbar-nav mr-rigth">
-		<li class="nav-item"><a class="nav-link" href="#">
-			<security:authentication property="principal" var="usuario" />
-			${usuario.nome }
-		</a></li>
-		<li class="nav-item">
-		  <a class="nav-link" href='<c:url value="/logout" />'>Sair</a>
-		</li>
+    	<li class="nav-item dropdown dropleft">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          <security:authentication property="principal" var="usuario" />
+			  ${usuario.nome }
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href='<c:url value="/logout" />'>Sair</a>
+	          <a class="dropdown-item" href="#">Alterar Senha</a>
+	        </div>
+	      </li>
 	</ul>
   </div>
 </nav>
