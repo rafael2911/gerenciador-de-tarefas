@@ -63,7 +63,6 @@
 	
 		<table class="table">
 			<tr>
-				<th>Id</th>
 				<th>Descrição</th>
 				<th>Abertura</th>
 				<th>Encerramento</th>
@@ -72,7 +71,6 @@
 			</tr>
 			<c:forEach items="${tarefas }" var="tarefa">
 				<tr>
-					<td>${tarefa.id }</td>
 					<td>${tarefa.descricao }</td>
 					<td>
 						<!-- Converte a variável de LocalDate para Date (não seria necessário se o atributo dataPublicacao fosse Date ou Calendar) -->
