@@ -84,11 +84,15 @@ public class UsuarioController {
 	@ResponseBody
 	@Transactional
 	public String cadastrarUsuarioPadrao() {
+		Role role = new Role("ROLE_ADMIN");
+		
+		roleDao.save(role);
+		
 		Usuario usuario = new Usuario(); 
 	    usuario.setNome("Rafael");
 	    usuario.setEmail("rafael@admin.com.br");
 	    usuario.setSenha("suporte123");
-	    usuario.setRoles(Arrays.asList(new Role("ROLE_ADMIN")));
+	    usuario.setRoles(Arrays.asList(role));
 	    
 	    usuarioDao.save(usuario);
 

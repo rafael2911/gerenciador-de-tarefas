@@ -19,4 +19,9 @@ public class RoleDao {
 		return manager.createQuery("from Role r", Role.class).getResultList();
 	}
 	
+	public Role save(Role role) {
+		manager.persist(role);
+		return role;
+	}
+	
 }
