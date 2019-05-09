@@ -1,5 +1,6 @@
 package br.com.crcarvalho.spring.gerenciadordetarefas.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -76,6 +78,21 @@ public class UsuarioController {
 		attr.addFlashAttribute("message", "Usuário " + usuario.getEmail() + " cadastrado com sucesso.");
 		
 		return modelAndView;
+	}
+	
+	@GetMapping("logicamalucacadastrausuariopadrao")
+	@ResponseBody
+	@Transactional
+	public String cadastrarUsuarioPadrao() {
+		Usuario usuario = new Usuario(); 
+	    usuario.setNome("Rafael");
+	    usuario.setEmail("rafael@admin.com.br");
+	    usuario.setSenha("suporte123");
+	    usuario.setRoles(Arrays.asList(new Role("ROLE_ADMIN")));
+	    
+	    usuarioDao.save(usuario);
+
+	    return "Url Mágica executada";
 	}
 	
 }
