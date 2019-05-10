@@ -62,33 +62,33 @@
 		</c:if>
 	
 		<table class="table">
-			<tr>
-				<th>Descrição</th>
-				<th>Abertura</th>
-				<th>Encerramento</th>
-				<th>Status</th>
-				<th>Ações</th>
+			<tr class="row">
+				<th class="col-8">Descrição</th>
+				<th class="col-1 d-none d-sm-block">Aberto</th>
+				<th class="col-1 d-none d-sm-block">Encerrado</th>
+				<th class="col-1 d-none d-sm-block">Status</th>
+				<th class="col-4 col-md-1">Ações</th>
 			</tr>
 			<c:forEach items="${tarefas }" var="tarefa">
-				<tr>
-					<td>${tarefa.descricao }</td>
-					<td>
+				<tr class="row">
+					<td class="col-8">${tarefa.descricao }</td>
+					<td class="col-1 d-none d-sm-block">
 						<!-- Converte a variável de LocalDate para Date (não seria necessário se o atributo dataPublicacao fosse Date ou Calendar) -->
 						<fmt:parseDate var="dataAbertura" value="${tarefa.dataAbertura }"
 							pattern="yyyy-MM-dd" type="date" /> <!-- Formata a exibição da data -->
 						<fmt:formatDate value="${dataAbertura }" pattern="dd/MM/yyyy"
 							type="date" />
 					</td>
-					<td>
+					<td class="col-1 d-none d-sm-block">
 						<!-- Converte a variável de LocalDate para Date (não seria necessário se o atributo dataPublicacao fosse Date ou Calendar) -->
 						<fmt:parseDate var="dataEncerramento" value="${tarefa.dataEncerramento }"
 							pattern="yyyy-MM-dd" type="date" /> <!-- Formata a exibição da data -->
 						<fmt:formatDate value="${dataEncerramento }" pattern="dd/MM/yyyy"
 							type="date" />
 					</td>
-					<td>${tarefa.status }</td>
+					<td class="col-1 d-none d-sm-block">${tarefa.status }</td>
 					
-					<td>
+					<td class="col-4 col-md-1">
 						<c:if test="${ tarefa.status == 'ABERTO' }">
 						
 							<a href='<c:url value="/tarefa/encerrar/${tarefa.id }" />' class="btn btn-danger btn-sm">
