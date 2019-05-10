@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class TarefaController {
 	}
 	
 	@GetMapping
+	@Transactional(readOnly = true)
 	public ModelAndView homeTarefas(@AuthenticationPrincipal Usuario usuario, TarefaBeanParam tarefaBeanParam) {
 		
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
@@ -52,6 +54,7 @@ public class TarefaController {
 	}
 	
 	@GetMapping("busca")
+	@Transactional(readOnly = true)
 	public ModelAndView buscaTarefas(@AuthenticationPrincipal Usuario usuario, TarefaBeanParam tarefaBeanParam) {
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
