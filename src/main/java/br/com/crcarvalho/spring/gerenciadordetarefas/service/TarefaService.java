@@ -24,7 +24,7 @@ public class TarefaService {
 	
 	public List<Tarefa> findByStatusOrDataAberturaOrDataEncerramento(Usuario usuario, TarefaBeanParam beanParam){
 		if(beanParam.getStatus() != null) {
-			return tarefaDao.findByStatus(usuario, beanParam.getStatus());
+			return findByStatus(usuario, beanParam.getStatus());
 		}
 		
 		if(!beanParam.getTipoData().isEmpty() && beanParam.getTipoData().equals("dataAbertura")) {
@@ -36,6 +36,10 @@ public class TarefaService {
 		}
 		
 		return tarefaDao.findAll(usuario);
+	}
+	
+	public List<Tarefa> findByStatus(Usuario usuario, Status status){
+		return tarefaDao.findByStatus(usuario, status);
 	}
 	
 	public List<Tarefa> findByDataAbertura(Usuario usuario, LocalDate dataInicial, LocalDate dataFinal){

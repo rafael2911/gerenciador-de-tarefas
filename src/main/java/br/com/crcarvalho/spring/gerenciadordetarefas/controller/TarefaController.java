@@ -1,6 +1,5 @@
 package br.com.crcarvalho.spring.gerenciadordetarefas.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -45,7 +44,7 @@ public class TarefaController {
 		
 		ModelAndView modelAndView = new ModelAndView("tarefa/lista");
 		
-		List<Tarefa> tarefas = tarefaService.findByDataAbertura(usuario, LocalDate.now(), LocalDate.now());
+		List<Tarefa> tarefas = tarefaService.findByStatus(usuario, Status.ABERTO);
 		
 		modelAndView.addObject("tarefas", tarefas);
 		modelAndView.addObject("status", Status.values());
